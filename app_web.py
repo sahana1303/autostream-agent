@@ -66,12 +66,18 @@ def home():
 # ---------- CHAT ----------
 @app.route("/chat", methods=["POST"])
 def chat():
-    data = request.get_json()
-    user = data.get("message")
-    print("USER:", user)
+    user = request.json.get("message", "").lower()
 
-    if not user:
-        return jsonify({"reply": "Please type something"})
+    if "instagram" in user:
+        reply = "To grow Instagram:\n1. Post daily\n2. Use reels\n3. Follow trends\n4. Engage with audience"
+    
+    elif "youtube" in user:
+        reply = "To grow YouTube:\n1. Consistent uploads\n2. Good thumbnails\n3. SEO titles\n4. Watch time focus"
+    
+    else:
+        reply = "Hello! Ask me about Instagram or YouTube growth."
+
+    return jsonify({"reply": reply})
 
     # ---------- LEAD FLOW ----------
     if state["intent"] == "high_intent":
